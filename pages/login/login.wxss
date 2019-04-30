@@ -1,0 +1,95 @@
+page {
+  width: 100%;
+}
+
+.myContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50rpx 20rpx;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  border: 1rpx solid #e0e0e0;
+  align-items: center;
+  height: 110rpx;
+  width: 90%;
+  padding-left: 20rpx;
+  box-shadow: 0 0 5rpx #e0e0e0;
+  border-radius: 10rpx;
+}
+
+.info .cleanbd {
+  border-top: 0;
+}
+
+.info text {
+  width: 150rpx;
+  font-size: 40rpx;
+}
+
+.info input {
+  flex: 1;
+}
+
+.info button {
+  margin: 0;
+  height: 110rpx;
+  line-height: 110rpx;
+  width: 210rpx;
+  font-size: 30rpx;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+}
+
+.fall {
+  margin-top: 35rpx;
+  width: 90%;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.explain {
+  color: #aaa;
+  margin-top: 30rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+.myPicker-view {
+  margin: 20rpx 0;
+  text-align: center;
+  width: 500rpx;
+  height: 135rpx;
+  font-size: 35rpx;
+}
+
+.picker-column {
+  line-height: 50rpx;
+}
+
+.mask {
+  background: none;
+}

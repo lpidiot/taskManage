@@ -1,0 +1,20 @@
+<view class='myContainer'>
+
+  <swiper class='mySwiper' indicator-dots='true'>
+    <block wx:for='{{images}}' wx:key='{{item.url}}'>
+      <swiper-item>
+        <image src='{{item.url}}'></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class='toolBar'>
+    <view class='item' bindtap='toolBarHander' wx:for='{{toolBar}}' data-key='{{item.key}}' wx:key='key'>
+
+      <image src='{{item.image}}'></image>
+      <text>{{item.text}}</text>
+
+    </view>
+  </view>
+
+</view>

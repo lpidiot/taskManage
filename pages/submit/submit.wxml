@@ -1,0 +1,40 @@
+<view class='myContainer'>
+  <view class='textBox'>
+    <view class='textBox_warp'>
+      <view class='warp_head'>输入作业名称</view>
+      <input class='warp_body' bindinput='nameChangeHander' />
+    </view>
+    <view class='textBox_warp'>
+      <view class='warp_head'>当前班级</view>
+      <view class='warp_body'>{{myClass}}</view>
+    </view>
+    <view class='textBox_warp'>
+      <view class='warp_head'>总人数</view>
+      <view class='warp_body'>{{num}}</view>
+    </view>
+    <view class='textBox_warp'>
+      <view class='warp_head'>未交人数</view>
+      <view class='warp_body'>{{flagNum}}</view>
+    </view>
+
+  </view>
+
+  <button type='primary' class='fillBtn' bindtap='startHander' disabled='{{startBtnState}}'>提交本次作业到云端</button>
+  <button class='fillBtn' bindtap='showHander'>展开未交列表</button>
+
+
+  <view style='margin:25rpx 0;'></view>
+  <scroll-view scrpll-y='true' hidden='{{hiddenList}}'>
+    <view class='textBox'>
+      <view class='textBox_warp'>
+        <view class='warp_head'>姓名</view>
+        <view class='warp_body'>学号</view>
+      </view>
+      <view class='textBox_warp' wx:for='{{wjData}}' wx:key='id'>
+        <view class='warp_head'>{{item.name}}</view>
+        <view class='warp_body'>{{item.studentNum}}</view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>

@@ -1,0 +1,76 @@
+.myContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.userinfo-avatar {
+  border-radius: 50%;
+  width: 150rpx;
+  height: 150rpx;
+  margin: 20rpx;
+  border: 5rpx solid #aaa;
+}
+
+.userinfo-nickname {
+  color: #eee;
+}
+
+.background {
+  width: 100%;
+  height: 350rpx;
+  background: #33d38b;
+  padding-top: 70rpx;
+}
+
+.optionBox {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background-color: #fdfdfd;
+  box-shadow: 0 0 12rpx #d0d0d0;
+  border-top: 2rpx solid #fdfdfd;
+  border-bottom: 2rpx solid #fdfdfd;
+  margin-bottom: 35rpx;
+}
+
+.optionBox .item {
+  display: flex;
+  width: 100%;
+  margin: 0 20rpx;
+  height: 90rpx;
+  align-items: center;
+  border-bottom: 3rpx solid #e0e0e0;
+}
+
+.optionBox :last-child {
+  display: flex;
+  width: 100%;
+  margin: 0 20rpx;
+  height: 90rpx;
+  align-items: center;
+  border: none;
+}
+
+.optionBox .item .item_icon {
+  width: 150rpx;
+}
+
+.optionBox .item .item_icon image {
+  max-width:150rpx;
+  max-height: 70rpx;
+}
+
+.optionBox .item .item_content {
+  font-size: 30rpx;
+  font-weight: 555;
+  flex: 1;
+}

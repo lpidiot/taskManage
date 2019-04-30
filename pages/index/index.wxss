@@ -1,0 +1,65 @@
+.myContainer {
+  display: flex;
+  flex-direction: column;
+  border-top: 1rpx solid #e0e0e0;
+  margin: 0 20rpx;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+swiper {
+  height: 330rpx;
+  box-shadow: 0 0 5rpx #e0e0e0;
+}
+
+swiper-item image {
+  width: 710rpx;
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 18rpx;
+}
+
+.toolBar {
+  display: flex;
+  margin: 20rpx 45rpx;
+  padding: 0;
+}
+
+.toolBar .item {
+  flex: 1;
+}
+
+.toolBar .item image {
+  margin: 0 auto;
+  width: 90rpx;
+  height: 90rpx;
+  display: block;
+}
+
+.toolBar .item text {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  color: #aaa;
+  margin-top: 5rpx;
+}

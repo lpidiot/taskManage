@@ -1,0 +1,57 @@
+/* pages/info/info.wxss */
+
+.myContainer {
+  border-top: 1rpx solid #e0e0e0;
+  margin: 0 20rpx;
+  overflow: hidden;
+}
+
+.info {
+  border: 1rpx solid #eee;
+  background-color: #f8f8f8;
+  padding: 20rpx;
+  margin-bottom: 15rpx;
+  box-shadow: 0 0 5rpx #e0e0e0;
+  height: 240rpx;
+
+}
+.big {
+  height: 210rpx;
+}
+
+.info .title {
+  display: flex;
+  font-size: 16px;
+  color: #6a6a6a;
+  margin-bottom: 20rpx;
+}
+
+.info .title .tit {
+  flex: 1;
+}
+
+.info .title .state {
+  width: 150rpx;
+}
+
+.info .content {
+  border-top: 5rpx #ccc dotted;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+
+.info .content text{
+    padding-top: 10rpx;
+}
+
+.tip{
+  text-align: center;
+  font-size: 45rpx;
+  margin-top: 100rpx;
+}
+
+
+.greenText{
+  color: #33d38b;
+}

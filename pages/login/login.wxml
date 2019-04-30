@@ -1,0 +1,33 @@
+<view class='myContainer'>
+  <view class='userinfo'>
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+
+  <view>
+    <picker-view indicator-style='height:50rpx;' class='myPicker-view' mask-class='mask' bindchange="bindChange" value='{{value}}'>
+      <picker-view-column>
+        <view wx:for="{{terms}}" class='picker-column'>{{item}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{courses}}" class='picker-column'>{{item}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{classes}}" class='picker-column'>{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+  <view class='info'>
+    <text>账号</text>
+    <input type='text' placeholder='输入账号' bindinput='usernameChangeHander' value='{{username}}'></input>
+  </view>
+
+  <view class='info'>
+    <text>密码</text>
+    <input type='password' placeholder='输入密码' bindinput='pwdChangeHander' value='{{password}}'></input>
+  </view>
+
+  <button class='fall' type='primary' bindtap='loginHander'>登录</button>
+
+</view>
