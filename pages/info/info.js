@@ -37,25 +37,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    const _this = this
-    /* app.myRequest('zuoyeAll', {}, null, function(result) {
-       if (result.statusCode == '200') {
-         if (result.data != null && result.data.length != 0) {
-           _this.setData({
-             info: result.data
-           })
-         } else {
-           _this.setData({
-             info: null
-           })
-         }
-       } else {
-         _this.setData({
-           info: []
-         })
-       }
-     })*/
-    var task = wx.getStorageSync('task')
+    var userModel = wx.getStorageSync('userModel')
+    var task = app.taskUtils.findByUserid(userModel.id)
     this.setData({
       info: task
     })

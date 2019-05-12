@@ -47,8 +47,11 @@ Page({
       content: '是否退出登录？退出不会影响本地数据',
       success: function(res) {
         if (res.confirm) {
+          //删除相关记录
+          wx.setStorageSync('userModel', null)
+
           wx.redirectTo({
-            url: '../login/login'
+            url: '../login/login?logout=true'
           })
         }
       }
@@ -60,8 +63,42 @@ Page({
       title: '警告',
       content: '同步后',
       success: function(res) {
+        var userModel = wx.getStorageSync('userModel')
         if (res.confirm) {
+          app.myRequest2('getTask', {
+            userId: userModel.id
+          }, null, function(result) {
+            if (result.statusCode == 200) {
+              var data = result.data
+              //拼装数据
+              for (var i in data) {
+                var classInfo = {}
+                classInfo.myClass = data[i].myClass
+                classInfo.stuList = data[i].stuList
+                data[i].classInfo = classInfo
+              }
+              //console.log(data)
+              //同步
+              app.taskUtils.synchronization(data)
 
+              wx.showToast({
+                title: '同步成功'
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: '获取数据异常，请尝试重试',
+                showCancel: false
+              })
+            }
+
+          }, function(result) {
+            wx.showModal({
+              title: '提示',
+              content: '连接异常',
+              showCancel: false
+            })
+          })
         }
       }
     })

@@ -52,7 +52,6 @@ Page({
       content: '是否确认提交？',
       success: function(res) {
         if (res.confirm) {
-          var list = wx.getStorageSync('loginInfo')
           var strs = ''
           var stuList = select.classInfo.stuList
           for (var i in stuList) {
@@ -60,12 +59,12 @@ Page({
           }
           var flagStrs = strs.substring(0, strs.length - 1)
 
-          app.myRequest2('test', {
+          app.myRequest2('saveTask', {
             id: select.id,
             name: select.name,
-            term: list.term,
-            course: list.course,
-            myClass: list.myClass,
+            term: select.term,
+            course: select.course,
+            myClass: select.classInfo.myClass,
             time: select.time,
             num: self.data.num,
             flagNum: self.data.zyData.classInfo.stuList.length,

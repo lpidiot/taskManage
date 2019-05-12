@@ -3,9 +3,9 @@
 App({
   onLaunch: function() {
     //wx.setStorageSync('stuInfo', null)
-    //wx.setStorageSync('task', null)
-    console.log(wx.getStorageSync('stuInfo'))
-    console.log(wx.getStorageSync('task'))
+    wx.setStorageSync('task', null)
+    //console.log(wx.getStorageSync('stuInfo'))
+    //console.log(wx.getStorageSync('task'))
     //this.getMyData()
     // 获取用户信息
     wx.getSetting({
@@ -319,6 +319,27 @@ App({
     }
     return flag
   },
+  /**
+   * 获取当前时间
+   */
+  getCurrentDtte: function() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    if (month < 10) {
+      month = "0" + month;
+    }
+    if (day < 10) {
+      day = "0" + day;
+    }
+    var nowDate = year + "-" + month + "-" + day;
+    return nowDate
+  },
+
+  /**
+   * 作业工具
+   */
   taskUtils: {
     /**
      * 创建一个uuid
@@ -365,6 +386,19 @@ App({
       return null
     },
     /**
+     * 根据userId查找task作业(查找该老师所有作业记录)
+     */
+    findByUserid: function(userId) {
+      var task = this.init()
+      var flag = []
+      for (var i in task) {
+        if (task[i].userId == userId) {
+          flag.push(task[i])
+        }
+      }
+      return flag
+    },
+    /**
      * 根据课程查找task作业
      */
     findByCourse: function(course) {
@@ -402,7 +436,20 @@ App({
       }
       return result
     },
-
+    /**
+     * 根据班级和课程查找某老师task作业(待保存的)
+     */
+    findByClassAndCourseAndStateAndUserId: function(myClass, course) {
+      var task = this.init()
+      var userModel = wx.getStorageSync('userModel')
+      var result = []
+      for (var i in task) {
+        if ((task[i].course == course) && (task[i].classInfo.myClass == myClass) && (task[i].state == '待保存') && (task[i].userId == userModel.id)) {
+          result.push(task[i])
+        }
+      }
+      return result
+    },
 
 
 
@@ -488,6 +535,34 @@ App({
         }
       }
       return
+    },
+    /**
+     * 同步数据
+     */
+    synchronization: function(data) {
+      var task = wx.getStorageSync('task')
+      if (task == null || task == undefined || task == '') {
+        task = []
+      }
+
+      for (var i in data) {
+        if (task.length > 0) {
+          for (var j in task) {
+            //存在相同数据，覆盖(其实不管更好..)
+            if (data[i].id == task[j].id) {
+              console.log('数据重复 覆盖')
+              task = task.splice(j, 1, data[i])
+              //本地没有，添加
+            } else {
+              task.push(data[i])
+            }
+          }
+        } else {
+          task.push(data[i])
+        }
+
+      }
+      wx.setStorageSync('task', task)
     }
   }
 })

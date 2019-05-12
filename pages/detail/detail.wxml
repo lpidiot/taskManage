@@ -9,6 +9,10 @@
       <view class='warp_body'>{{zyData.time}}</view>
     </view>
     <view class='textBox_warp'>
+      <view class='warp_head'>课程</view>
+      <view class='warp_body'>{{zyData.course}}</view>
+    </view>
+    <view class='textBox_warp'>
       <view class='warp_head'>班级</view>
       <view class='warp_body'>{{zyData.classInfo.myClass}}</view>
     </view>

@@ -35,12 +35,16 @@ Page({
     //   app.getStuInfo()
     // }
     var id = app.taskUtils.creatorUUID()
+    var time = app.getCurrentDtte()
+    var userModel = wx.getStorageSync('userModel')
     task.push({
       id: id,
+      userId: userModel.id,
       state: '待保存',
       name: name,
+      term: loginInfo.term,
       course: loginInfo.course,
-      time: '测试时间',
+      time: time,
       classInfo: classInfo
     })
     wx.setStorageSync('task', task)

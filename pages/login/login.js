@@ -102,6 +102,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
+    //取出学期等数据
+    this.setData({
+      terms: app.globalData.terms,
+      courses: app.globalData.courses,
+      classes: app.globalData.classes
+    })
+
+    if (options.logout == 'true') {
+
+      app.getMyData()
+      var terms = wx.getStorageSync('terms')
+      var courses = wx.getStorageSync('courses')
+      var classes = wx.getStorageSync('classes')
+      this.setData({
+        terms: terms,
+        courses: courses,
+        classes: classes
+      })
+    }
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -129,27 +149,7 @@ Page({
       })
     }
 
-  },
 
-
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    //取出学期等数据
-    this.setData({
-      terms: app.globalData.terms,
-      courses: app.globalData.courses,
-      classes: app.globalData.classes
-    })
     //获取之前登录的信息
     var loginInfo = wx.getStorageSync('loginInfo')
 
@@ -171,12 +171,25 @@ Page({
         value: [0, 0, 0]
       })
     }
-    // wx.showLoading({
-    //   title: '登录中...',
-    //   mask: true
-    // })
-    //发送
-    console.log('发送==')
+
+
+
+  },
+
+
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+
 
   },
 
