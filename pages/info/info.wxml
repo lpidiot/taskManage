@@ -3,14 +3,13 @@
 
   <view class='info' wx:for="{{info}}" wx:key="id" wx:if="{{info!=[]&&info!=null}}" bindtap='showHander' data-id='{{item.id}}'>
     <view class='title'>
-      <text class='tit'>作业名称</text>
-      <text>{{item.zuoyemc}}</text>
+      <text class='tit'>作业名称:{{item.name}}</text>
+      <text class="{{item.state=='待保存'?'greenText':''}}">{{item.state}}</text>
     </view>
     <view class='content'>
-      <text>操作时间: {{item.date}}</text>
-      <text>班级: {{item.tbclass}}</text>
-      <text>总人数: {{item.zrs}}</text>
-      <text>未交: {{item.wjrs}}</text>
+      <text>操作时间: {{item.time}}</text>
+      <text>班级: {{item.classInfo.myClass}}</text>
+      <text>未交数: {{item.classInfo.stuList.length}}</text>
     </view>
   </view>
 

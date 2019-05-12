@@ -38,24 +38,27 @@ Page({
    */
   onShow: function() {
     const _this = this
-    app.myRequest('zuoyeAll', {}, null, function(result) {
-      if (result.statusCode == '200') {
-        if (result.data != null && result.data.length != 0) {
-          _this.setData({
-            info: result.data
-          })
-        } else {
-          _this.setData({
-            info: null
-          })
-        }
-      } else {
-        _this.setData({
-          info: []
-        })
-      }
+    /* app.myRequest('zuoyeAll', {}, null, function(result) {
+       if (result.statusCode == '200') {
+         if (result.data != null && result.data.length != 0) {
+           _this.setData({
+             info: result.data
+           })
+         } else {
+           _this.setData({
+             info: null
+           })
+         }
+       } else {
+         _this.setData({
+           info: []
+         })
+       }
+     })*/
+    var task = wx.getStorageSync('task')
+    this.setData({
+      info: task
     })
-
   },
 
   /**

@@ -75,8 +75,7 @@ Page({
             myClass: myClass
           }
           wx.setStorageSync('loginInfo', loginInfo)
-          app.globalData.loginInfo = loginInfo
-          app.globalData.userModel = result.data
+          wx.setStorageSync('userModel', result.data)
           app.getStuInfo()
           wx.switchTab({
             url: '../index/index'

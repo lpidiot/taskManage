@@ -7,35 +7,34 @@ Page({
    * 页面的初始数据
    */
   data: {
+    taskId: 0,
     hiddenList: true,
     zyData: {},
-    wjData: {}
+    wjData: {},
+    num: 0,
+    viewText: '保存到云端',
+    viewDisable: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const _this = this
-    app.myRequest('xszuoyeId', {
-      id: options.id
-    }, null, function(result) {
-      _this.setData({
-        zyData: result.data
-      })
-      app.myRequest('zuoyejlCZ', {
-        name: _this.data.zyData.zuoyemc,
-        tbclass: _this.data.zyData.tbclass
-
-      }, null, function(result) {
-        if (result.statusCode == '200') {
-          //console.log(result.data)
-          _this.setData({
-            wjData: result.data
-          })
-        }
-      })
+    var id = options.id
+    this.data.taskId = id
+    var task = app.taskUtils.findById(id)
+    var list = app.getMyClass(wx.getStorageSync('loginInfo').myClass).stuList
+    this.setData({
+      zyData: task,
+      wjData: task.classInfo.stuList,
+      num: list.length
     })
+    if (task.state == '已保存') {
+      this.setData({
+        viewText: '已保存',
+        viewDisable: true
+      })
+    }
   },
   showHander: function(e) {
 
@@ -43,7 +42,74 @@ Page({
       hiddenList: !this.data.hiddenList
     })
   },
+  saveHander: function(e) {
+    const self = this
+    var id = this.data.taskId
+    var select = app.taskUtils.findById(id)
+    //console.log(select)
+    wx.showModal({
+      title: '提示',
+      content: '是否确认提交？',
+      success: function(res) {
+        if (res.confirm) {
+          var list = wx.getStorageSync('loginInfo')
+          var strs = ''
+          var stuList = select.classInfo.stuList
+          for (var i in stuList) {
+            strs += stuList[i].studentNum + ','
+          }
+          var flagStrs = strs.substring(0, strs.length - 1)
 
+          app.myRequest2('test', {
+            id: select.id,
+            name: select.name,
+            term: list.term,
+            course: list.course,
+            myClass: list.myClass,
+            time: select.time,
+            num: self.data.num,
+            flagNum: self.data.zyData.classInfo.stuList.length,
+            flagStrs: flagStrs
+          }, null, function(result) {
+            if (result.statusCode == 200) {
+              if (result) {
+                //保存成功后更新下本地记录
+                select.state = '已保存'
+
+                app.taskUtils.updateTask(select)
+
+                wx.switchTab({
+                  url: '../info/info'
+                })
+                wx.showToast({
+                  title: '保存成功'
+                })
+              } else {
+                wx.showModal({
+                  title: '提示',
+                  content: '操作失败,请尝试重新',
+                  showCancel: false
+                })
+              }
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: '操作失败,请尝试重新',
+                showCancel: false
+              })
+            }
+          }, function(result) {
+            wx.showModal({
+              title: '提示',
+              content: '连接服务器失败',
+              showCancel: false
+            })
+          })
+        }
+      }
+    })
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

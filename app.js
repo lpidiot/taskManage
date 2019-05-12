@@ -2,8 +2,11 @@
 
 App({
   onLaunch: function() {
-    // wx.setStorageSync('stuInfo', null)
-    this.getMyData()
+    //wx.setStorageSync('stuInfo', null)
+    //wx.setStorageSync('task', null)
+    console.log(wx.getStorageSync('stuInfo'))
+    console.log(wx.getStorageSync('task'))
+    //this.getMyData()
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -19,6 +22,19 @@ App({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
+              var loginInfo = wx.getStorageSync('loginInfo')
+              if (loginInfo != null && loginInfo != undefined && loginInfo != '') {
+                this.getStuInfo()
+                wx.switchTab({
+                  url: '../index/index'
+                })
+              } else {
+                this.getMyData()
+                wx.redirectTo({
+                  url: '../login/login'
+                })
+              }
+
             }
           })
         } else {
@@ -34,10 +50,8 @@ App({
   },
   globalData: {
     //url: 'http://192.168.52.84/hmw/weixin/',
-    url: 'http://192.168.52.57/hmw/weixin/',
+    url: 'http://172.16.162.170/hmw/weixin/',
     userInfo: null, //微信基本信息(昵称，头像)
-    loginInfo: null, //登录信息
-    userModel: null, //后台用户对象
     terms: [],
     courses: [],
     classes: []
@@ -83,6 +97,7 @@ App({
           terms.push(xnxq[obj].xnxq)
         }
         _this.globalData.terms = terms
+        wx.setStorageSync('terms', terms)
         //console.log(_this.globalData.terms)
         _this.myRequest2('curriculum', {}, null, function(result) {
           var curriculum = result.data
@@ -93,6 +108,7 @@ App({
             }
 
             _this.globalData.courses = courses
+            wx.setStorageSync('courses', courses)
             _this.myRequest2('tbclassAll', {}, null, function(result) {
               var tbclass = result.data
               var classes = []
@@ -102,6 +118,7 @@ App({
                 }
 
                 _this.globalData.classes = classes
+                wx.setStorageSync('classes', classes)
 
               } else {
                 wx.showModal({
@@ -208,16 +225,17 @@ App({
   getStuInfo: function() {
     const _this = this
     var list = wx.getStorageSync('stuInfo')
+    var myClass = wx.getStorageSync('loginInfo').myClass
     //没有，创建
     if (list == undefined || list == null || list == '') {
       console.log('开始创建stuInfo')
       _this.myRequest('studentAll', {
-        tbclass: _this.globalData.loginInfo.myClass
+        tbclass: myClass
       }, null, function(result) {
         if (result.statusCode == '200') {
           var stuInfo = []
           var obj = {
-            myClass: _this.globalData.loginInfo.myClass,
+            myClass: myClass,
             stuList: result.data
           }
           stuInfo.push(obj)
@@ -226,15 +244,16 @@ App({
       })
       //没有当前班级记录 创建
     } else {
-      console.log('开始添加stuInfo')
-      var stu = _this.getMyClass(_this.globalData.loginInfo.myClass)
+      var stu = _this.getMyClass(myClass)
       if (stu == null || stu == undefined || stu == '') {
+        console.log('开始添加stuInfo')
+
         _this.myRequest('studentAll', {
-          tbclass: _this.globalData.loginInfo.myClass
+          tbclass: myClass
         }, null, function(result) {
           if (result.statusCode == '200') {
             var obj = {
-              myClass: _this.globalData.loginInfo.myClass,
+              myClass: myClass,
               stuList: result.data
             }
             list.push(obj)
@@ -299,5 +318,176 @@ App({
       }
     }
     return flag
+  },
+  taskUtils: {
+    /**
+     * 创建一个uuid
+     */
+    creatorUUID: function() {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[8] = s[13] = s[18] = s[23] = "-";
+
+      var uuid = s.join("");
+      return uuid;
+    },
+    /**
+     * 初始化数据
+     */
+    init: function() {
+      var task = wx.getStorageSync('task')
+      if (task == null || task == undefined || task == '') {
+        wx.showModal({
+          title: '提示',
+          content: '还没有作业，请先添加',
+          showCancel: false
+        })
+        return null
+      }
+      return task
+    },
+    /**
+     * 根据id查找task作业
+     */
+    findById: function(id) {
+      var task = this.init()
+
+      for (var i in task) {
+        if (task[i].id == id) {
+          return task[i]
+        }
+      }
+      return null
+    },
+    /**
+     * 根据课程查找task作业
+     */
+    findByCourse: function(course) {
+      var task = this.init()
+      for (var i in task) {
+        if (task[i].course == course) {
+          return task[i]
+        }
+      }
+      return null
+    },
+    /**
+     * 根据班级和课程查找task作业
+     */
+    findByClassAndCourse: function(myClass, course) {
+      var task = this.init()
+      var result = []
+      for (var i in task) {
+        if ((task[i].course == course) && (task[i].classInfo.myClass == myClass)) {
+          result.push(task[i])
+        }
+      }
+      return result
+    },
+    /**
+     * 根据班级和课程查找task作业(待保存的)
+     */
+    findByClassAndCourseAndState: function(myClass, course) {
+      var task = this.init()
+      var result = []
+      for (var i in task) {
+        if ((task[i].course == course) && (task[i].classInfo.myClass == myClass) && (task[i].state == '待保存')) {
+          result.push(task[i])
+        }
+      }
+      return result
+    },
+
+
+
+
+    /**
+     * 根据班级查找task作业
+     */
+    findByClass: function(myClass) {
+      var task = this.init()
+      var result = []
+      for (var i in task) {
+        if (task[i].classInfo.myClass == myClass) {
+          result.push(task[i])
+        }
+      }
+      return result
+    },
+    /**
+     * 根据作业查找task作业
+     */
+    findByTask: function(task) {
+      var task = this.init()
+      for (var i in task) {
+        if (task[i] == task) {
+          return task[i]
+        }
+      }
+      return null
+    },
+    /**
+     * 删除列表内的指定学号学生
+     * stuList 学生列表
+     * stuNum 要删除的学号
+     */
+    removeStu: function(stuList, stuNum) {
+      for (var i in stuList) {
+        if (stuList[i].studentNum == stuNum) {
+          stuList.splice(i, 1)
+          return stuList
+        }
+      }
+      return null
+    },
+    /**
+     * 删除列表内的指定学号学生
+     * stuList 学生列表
+     * stuNum 要删除的学号
+     */
+    removeStu: function(stuList, stuNum) {
+      for (var i in stuList) {
+        if (stuList[i].studentNum == stuNum) {
+          stuList.splice(i, 1)
+          return stuList
+        }
+      }
+      return stuList
+    },
+    /**
+     * 确认某班级中是否存在某学生
+     * myClass 班级
+     * stuNum 学号
+     * return boolean true存在
+     */
+    confirmStu: function(myClass, stuNum) {
+      var stuList = getApp().getMyClass(myClass).stuList
+      //console.log(stuInfo)
+      for (var i in stuList) {
+        if (stuList[i].studentNum == stuNum) {
+          return true
+        }
+      }
+      return false
+    },
+    /**
+     * 修改task作业信息
+     */
+    updateTask: function(data) {
+      var task = this.init()
+      for (var i in task) {
+        if (task[i].id == data.id) {
+          task.splice(i, 1, data)
+          wx, wx.setStorageSync('task', task)
+          return
+        }
+      }
+      return
+    }
   }
 })

@@ -8,7 +8,8 @@
     "pages/info/info",
     "pages/detail/detail",
     "pages/submit/submit",
-    "pages/setting/setting"
+    "pages/setting/setting",
+    "pages/add/add"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -4,7 +4,14 @@
     <view class='userinfo'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      <text>{{test}}</text>
+      <text class='myText'>{{current}}</text>
+
+    </view>
+  </view>
+
+  <view class='optionBox'>
+    <view class='item' bindtap='synchronization'>
+      <view class='item_content'>同步数据到本地</view>
     </view>
   </view>
 

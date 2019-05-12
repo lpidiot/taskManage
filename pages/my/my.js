@@ -8,6 +8,8 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
+    current: '',
+    name: '',
     options: [{
         icon: '../../images/setting_200.png',
         data: '测试',
@@ -52,6 +54,18 @@ Page({
       }
     })
   },
+
+  synchronization: function(e) {
+    wx.showModal({
+      title: '警告',
+      content: '同步后',
+      success: function(res) {
+        if (res.confirm) {
+
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -82,6 +96,13 @@ Page({
         }
       })
     }
+
+    var loginInfo = wx.getStorageSync('loginInfo')
+
+    this.setData({
+      current: '当前：' + loginInfo.term + '-' + loginInfo.course + '-' + loginInfo.myClass,
+      name: ''
+    })
   },
 
   /**

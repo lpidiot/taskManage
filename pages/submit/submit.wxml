@@ -1,8 +1,16 @@
 <view class='myContainer'>
   <view class='textBox'>
+
     <view class='textBox_warp'>
-      <view class='warp_head'>输入作业名称</view>
-      <input class='warp_body' bindinput='nameChangeHander' />
+      <picker bindcolumnchange="" range="{{taskList}}" bindchange='taskPickerChange'>
+        <view class='select' bindtap='clickTaskHander'>
+          {{taskText==null?'选择作业':taskText}}
+        </view>
+      </picker>
+    </view>
+    <view class='textBox_warp'>
+      <view class='warp_head'>当前课程</view>
+      <view class='warp_body'>{{course}}</view>
     </view>
     <view class='textBox_warp'>
       <view class='warp_head'>当前班级</view>
@@ -19,8 +27,9 @@
 
   </view>
 
-  <button type='primary' class='fillBtn' bindtap='startHander' disabled='{{startBtnState}}'>提交本次作业到云端</button>
-  <button class='fillBtn' bindtap='showHander'>展开未交列表</button>
+  <button type='primary' class='fillBtn' bindtap='startHander' disabled='{{startBtnDisable}}'>扫描作业</button>
+  <button type='primary' class='fillBtn' bindtap='saveHander' disabled='{{startBtnDisable}}'>保存到云端</button>
+  <button class='fillBtn' bindtap='showHander' disabled='{{startBtnDisable}}'>展开未交列表</button>
 
 
   <view style='margin:25rpx 0;'></view>

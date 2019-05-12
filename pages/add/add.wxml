@@ -1,0 +1,12 @@
+<!--pages/add/add.wxml-->
+<view class='container'>
+
+  <view class='textBox'>
+    <view class='textBox_warp'>
+      <view class='warp_head'>输入作业名称</view>
+      <input class='warp_body' bindinput='nameChangeHander' />
+    </view>
+    <button type='primary' class='fillBtn' bindtap='startHander'>保存</button>
+  </view>
+  
+</view>

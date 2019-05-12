@@ -65,7 +65,7 @@
 }
 
 .optionBox .item .item_icon image {
-  max-width:150rpx;
+  max-width: 150rpx;
   max-height: 70rpx;
 }
 
@@ -73,4 +73,10 @@
   font-size: 30rpx;
   font-weight: 555;
   flex: 1;
+}
+
+.myText {
+  color: #eee;
+  font-size: 32rpx;
+  padding-top: 20rpx;
 }

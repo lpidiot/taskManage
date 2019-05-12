@@ -14,17 +14,17 @@ Page({
     ],
     //工具栏
     toolBar: [{
-        image: '../../images/scanCode.png',
-        text: '扫描',
-        key: 'QRcode'
+        image: '../../images/add.png',
+        text: '添加作业',
+        key: 'add'
       },
       {
-        image: '../../images/log.png',
+        image: '../../images/submit.png',
         text: '提交作业',
         key: 'submit'
       },
       {
-        image: '../../images/record3.png',
+        image: '../../images/record.png',
         text: '记录',
         key: 'record'
       }
@@ -72,7 +72,7 @@ Page({
             var stuNum = res.result
             app.myRequest('studentNum', {
               studentNum: stuNum,
-              tbclassname:app.globalData.loginInfo.myClass
+              tbclassname: app.globalData.loginInfo.myClass
             }, null, function(status) {
 
 
@@ -95,12 +95,12 @@ Page({
               } else {
                 wx.showToast({
                   title: '该班级没有该学生',
-                  icon:'none',
+                  icon: 'none',
                   duration: 2000
                 })
               }
             })
-           
+
           },
           fail: (res) => {
 
@@ -117,6 +117,12 @@ Page({
       case 'record':
         wx.navigateTo({
           url: '../info/info'
+        })
+        break
+
+      case 'add':
+        wx.navigateTo({
+          url: '../add/add'
         })
         break
 

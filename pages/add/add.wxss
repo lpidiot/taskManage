@@ -1,5 +1,4 @@
 .myContainer {
-
   border-top: 1rpx solid #e0e0e0;
   display: flex;
   flex-direction: column;
@@ -10,13 +9,11 @@
 
 .textBox {
   display: flex;
-  width: 100%;
   flex-direction: column;
 }
 
 .textBox_warp {
   display: flex;
-  width: 100%;
   border-bottom: 2rpx solid #e0e0e0;
   padding: 20rpx 0;
 }
@@ -38,25 +35,8 @@
   font-weight: 600rpx;
 }
 
-.fillBtn {
+
+.fillBtn{
   width: 90%;
-  margin-top: 30rpx;
-}
-
-.select {
-  width: 100%;
-  height: 90rpx;
-  padding: 0 24rpx;
-  box-sizing: border-box;
-  line-height: 90rpx;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  border-top: 1rpx solid #e0e0e0;
-  border-bottom: 1rpx solid #e0e0e0;
-  box-shadow: 0 0 5rpx #e0e0e0;
-}
-
-picker{
-  width: 100%;
+  margin-top: 60rpx;
 }
