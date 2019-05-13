@@ -322,7 +322,7 @@ App({
   /**
    * 获取当前时间
    */
-  getCurrentDtte: function() {
+  getCurrentDate: function() {
     var date = new Date();
     var year = date.getFullYear();
     var month = date.getMonth() + 1;

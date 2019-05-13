@@ -35,7 +35,7 @@ Page({
     //   app.getStuInfo()
     // }
     var id = app.taskUtils.creatorUUID()
-    var time = app.getCurrentDtte()
+    var time = app.getCurrentDate()
     var userModel = wx.getStorageSync('userModel')
     task.push({
       id: id,
