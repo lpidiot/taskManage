@@ -3,7 +3,7 @@
 App({
   onLaunch: function() {
     //wx.setStorageSync('stuInfo', null)
-    wx.setStorageSync('task', null)
+    //wx.setStorageSync('task', null)
     //console.log(wx.getStorageSync('stuInfo'))
     //console.log(wx.getStorageSync('task'))
     //this.getMyData()
